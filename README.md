@@ -38,3 +38,27 @@ export default class MyPage extends React.Component {
   }
 }
 ```
+
+## Client Side Usage
+
+```
+import React from 'react';
+import Redirect from 'nextjs-universal-redirect';
+
+class ScrollingList extends React.Component {
+  
+  componentDidMount() {
+    if (!this.props.user) {
+      Redirect('/login', undefined, 'url-to-be-continued-after-login')
+    }
+  }
+
+  render() {
+    return (
+      <div >
+       Authenticate
+      </div>
+    );
+  }
+}
+```
