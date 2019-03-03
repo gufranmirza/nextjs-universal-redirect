@@ -4,6 +4,18 @@ Higher order component to handle both client and server side redirecting with [N
 
 Note: this package is made for Next.js 7.0.0
 
+## API
+### Router
+
+```
+Router: (target, res, next) => boolean
+// target: Url to be redirected
+// req: Request object if availabe
+// next: Next Url i.e. ?next=next
+
+// Returns current environment Server || Browser
+ ```
+
 ## Usage
 
 Create a `_error.js` file in the `pages` directory of your project
