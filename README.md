@@ -16,32 +16,25 @@ Router: (target, res, next) => boolean
 // Returns current environment Server || Browser
  ```
 
-## Usage
+## Server Side Ussage
 
-Create a `_error.js` file in the `pages` directory of your project
+```
+import React from 'react';
+import Redirect from 'nextjs-universal-redirect';
 
-`pages/_error.js`:
-
-```js
-import ErrorComponent from 'next/error'
-import redirect from 'next-universal-redirect'
-
-// This renders the default Next.js error/404 component
-class Error extends React.Component {
-  static getInitialProps ({ req, res, xhr, pathname }) {
-    const statusCode = res ? res.statusCode : (xhr ? xhr.status : null)
-    return { statusCode }
+export default class MyPage extends React.Component {
+  static async getInitialProps({ req, res }) {
+    if (!req.user) {
+      Redirect('/login', res, 'url-to-be-continued-after-login')
+    }
   }
 
-  render () {
-    return <ErrorComponent statusCode={this.props.statusCode} />
+  render() {
+    return (
+      <div>
+       Authenticate
+      </div>
+    )
   }
 }
-
-// Create a map of redirects
-const list = new Map()
-list.set('/example', '/example2')
-
-// Calling `rewrite(list)(<ComponentHere />)` will return a HOC that will match the provided list against incoming page requests and will redirect accordingly.
-export default redirect(list)(Error)
 ```
