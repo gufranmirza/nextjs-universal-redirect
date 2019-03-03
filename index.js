@@ -1,4 +1,4 @@
-const Router = require('next-routes')();
+const { Router } = require('next-routes')();
 
 const getUrl = (target, next) => {
   if (next) {
@@ -11,17 +11,14 @@ const getUrl = (target, next) => {
 // pass target, res, next i.e. next route to be passed as params
 const redirect = (target, res, next) => {
   let isBrowser = false;
-  if (res) {
-    // Check if Headers are not sent already
-    if (!res.headersSent) {
-      // Server
-      // 303: "See other"
-      res.writeHead(303, { Location: getUrl(target, next) });
-      res.end();
-      isBrowser = false;
-    }
-  }
-  if (typeof window !== 'undefined') {
+
+  // Check if Headers are not sent already
+  if (res && !res.headersSent) {
+    // Server
+    // 303: "See other"
+    res.writeHead(303, { Location: getUrl(target, next) });
+    res.end();
+  } else if (typeof window !== 'undefined') {
     // Browser
     // In the browser, we just pretend like this never even happened ;)
     isBrowser = true;
